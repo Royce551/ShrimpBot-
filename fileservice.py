@@ -21,5 +21,11 @@ def cserverconfig(sID, sCH, sMO):
     with open(sID + '.sffs', 'w') as configfile:
         config.write(configfile)
 
-cserverconfig('test', '123', '345')
+def lserverconfig():
+    config = configparser.ConfigParser(sID)
+    config.read(sID + '.sffs')
+    sID = config['Data']['Server ID']
+    sCH = config['Flags']['SuggestChannel']
+    sMO = config['Data']['Moderators']
+    return sID, sCH, sMO
 
