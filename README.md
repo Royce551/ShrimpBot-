@@ -1,6 +1,8 @@
-# Shrimpbot Rewrite (Shrimp Framework 2)
-*Making Shrimpbot bigger and better.*
+# Shrimpbot Stable
+*The original Shrimpbot*
 
-This repository is for the new Shrimpbot Rewrite, which aims to make ShrimpBot better in every way and hopefully makes future development easier as well!
+Exactly what it says on the tin, the original Shrimpbot, which is based on discord.py. Has some limitations, but works well enough.
+
+
 
 
