@@ -27,5 +27,5 @@ def lserverconfig():
     sID = config['Data']['Server ID']
     sCH = config['Flags']['SuggestChannel']
     sMO = config['Data']['Moderators']
-    return sID, sCH, sMO
+    return sID, sCH, sMO;
 

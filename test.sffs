@@ -1,0 +1,8 @@
+[Data]
+version = 1
+server id = test
+moderators = 345
+
+[Flags]
+suggestchannel = 123
+
