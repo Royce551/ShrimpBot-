@@ -20,7 +20,6 @@ def cserverconfig(sID, sCH, sMO):
     config['Data']['Moderators'] = sMO
     with open(sID + '.sffs', 'w') as configfile:
         config.write(configfile)
-
 def lserverconfig():
     config = configparser.ConfigParser(sID)
     config.read(sID + '.sffs')
@@ -28,4 +27,20 @@ def lserverconfig():
     sCH = config['Flags']['SuggestChannel']
     sMO = config['Data']['Moderators']
     return sID, sCH, sMO;
+def cuserconfig(money, uID):
+    config = configparser.ConfigParser()
+    config.add_section("Metadata")
+    config.add_section("Economy")
+    config['Metadata']['UserID'] = uID
+    config['Metadata']['Version'] = '1'
+    config['Economy']['money'] = money
+    with open(uID + '.sffu', 'w') as configfile:
+        config.write(configfile)
+def luserconfig(uID):
+    config = configparser.ConfigParser()
+    config.read(uID + '.sffu')
+    Money = config['Economy']['money']
+    return Money
+    
+    
 
