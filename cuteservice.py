@@ -22,37 +22,37 @@ def cute(flag ='all'):
     cutenumber = str(random.randint(one,two))
     cutesend = 'p'
     if cutenumber == '1':
-        cutesend = 'cute1.png'
+        cutesend = 'cuteservice\\cute1.png'
     elif cutenumber == '2':
-        cutesend = 'cute2.png'
+        cutesend = 'cuteservice\\cute2.png'
     elif cutenumber == '3':
-        cutesend = 'cute3.png'
+        cutesend = 'cuteservice\\cute3.png'
     elif cutenumber == '4':
-        cutesend = 'cute4.png'
+        cutesend = 'cuteservice\\cute4.png'
     elif cutenumber == '5':
-        cutesend = 'cute5.png'
+        cutesend = 'cuteservice\\cute5.png'
     elif cutenumber == '6':
-        cutesend = 'cute6.png'
+        cutesend = 'cuteservice\\cute6.png'
     elif cutenumber == '7':
-        cutesend = 'cute7.png'
+        cutesend = 'cuteservice\\cute7.png'
     elif cutenumber == '8':
-        cutesend = 'cute8.png'
+        cutesend = 'cuteservice\\cute8.png'
     elif cutenumber == '9':
-        cutesend = 'cute9.png'
+        cutesend = 'cuteservice\\cute9.png'
     elif cutenumber == '10':
-        cutesend = 'cute10.png'
+        cutesend = 'cuteservice\\cute10.png'
     elif cutenumber == '11':
-        cutesend = 'cute11.png'
+        cutesend = 'cuteservice\\cute11.png'
     elif cutenumber == '12':
-        cutesend = 'cute12.jpg'
+        cutesend = 'cuteservice\\cute12.jpg'
     elif cutenumber == '13':
-        cutesend = 'cute13.png'
+        cutesend = 'cuteservice\\cute13.png'
     elif cutenumber == '14':
-        cutesend = 'cute14.png'
+        cutesend = 'cuteservice\\cute14.png'
     elif cutenumber == '15':
-        cutesend = 'cute15.png'
+        cutesend = 'cuteservice\\cute15.png'
     elif cutenumber == '16':
-        cutesend = 'cute16.jpg'
+        cutesend = 'cuteservice\\cute16.jpg'
     elif cutenumber == '17':
         cutesend = 'placeholder.png'
     return cutesend
@@ -62,7 +62,7 @@ def hug():
     huginfo = 'p'
     hugnumber = str(random.randint(1,1))
     if hugnumber == '1':
-        hugsend = 'hug1.png'
+        hugsend = 'cuteservice\\hug\\hug1.png'
         huginfo = '''
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 By うさみん | https://twitter.com/usamin1211/status/1079953811702042624'''
@@ -73,7 +73,7 @@ def slap():
     slapinfo = 'p'
     slapnumber = str(random.randint(1,1))
     if slapnumber == '1':
-        slapsend = 'slapimage.gif'
+        slapsend = 'cuteservice\\slap\\slapimage.gif'
         slapinfo = '''
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Sources not available, sorry \:('''
@@ -84,7 +84,7 @@ def pet():
     petinfo = 'p'
     petnumber = str(random.randint(1,1))
     if petnumber == '1':
-        petsend = 'petimage.png'
+        petsend = 'cuteservice\\pet\\petimage.png'
         petinfo = '''
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Sources not available, sorry \:('''
@@ -209,8 +209,16 @@ def get8ball():
     else:
         positive = 'N'
     return result, positive;
-        
-        
-        
+
+#def shrimperrorhandler(error, severity =1, number):
+    #message = ''
+    #if severity = 1:
+        #message = '''
+#:information_source: **Shrimpbot Oopsies!**
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#There's an issue.
+#{}
+# {}
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'''
 
 
