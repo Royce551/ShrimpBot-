@@ -1,6 +1,7 @@
 import discord
 import random
 from discord.ext import commands
+import os
 #CuteService Ver. 1, Patch 0.
 def cuver():
     return 'Version 1 Patch 2'
@@ -9,53 +10,21 @@ def cute(flag ='all'):
     two = 0
     if flag == 'all':
         one = 1
-        two = 1
+        two = 19
     elif flag == 'anime':
         one = 1
-        two = 16
-    elif flag == 'doggos':
-        one = 17
-        two = 17
+        two = 19
+    elif flag == 'catgirls':
+        one = 16
+        two = 19
     else:
         one = 1
-        two = 17
+        two = 19
     cutenumber = str(random.randint(one,two))
-    cutesend = 'p'
-    if cutenumber == '1':
-        cutesend = 'cuteservice\\cute1.png'
-    elif cutenumber == '2':
-        cutesend = 'cuteservice\\cute2.png'
-    elif cutenumber == '3':
-        cutesend = 'cuteservice\\cute3.png'
-    elif cutenumber == '4':
-        cutesend = 'cuteservice\\cute4.png'
-    elif cutenumber == '5':
-        cutesend = 'cuteservice\\cute5.png'
-    elif cutenumber == '6':
-        cutesend = 'cuteservice\\cute6.png'
-    elif cutenumber == '7':
-        cutesend = 'cuteservice\\cute7.png'
-    elif cutenumber == '8':
-        cutesend = 'cuteservice\\cute8.png'
-    elif cutenumber == '9':
-        cutesend = 'cuteservice\\cute9.png'
-    elif cutenumber == '10':
-        cutesend = 'cuteservice\\cute10.png'
-    elif cutenumber == '11':
-        cutesend = 'cuteservice\\cute11.png'
-    elif cutenumber == '12':
-        cutesend = 'cuteservice\\cute12.jpg'
-    elif cutenumber == '13':
-        cutesend = 'cuteservice\\cute13.png'
-    elif cutenumber == '14':
-        cutesend = 'cuteservice\\cute14.png'
-    elif cutenumber == '15':
-        cutesend = 'cuteservice\\cute15.png'
-    elif cutenumber == '16':
-        cutesend = 'cuteservice\\cute16.jpg'
-    elif cutenumber == '17':
-        cutesend = 'placeholder.png'
+    cutesend = 'cuteservice\\cute' + cutenumber + '.png'
     return cutesend
+
+
 
 def hug():
     hugsend = 'p'

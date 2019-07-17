@@ -10,9 +10,11 @@ import cuteservice
 logging.basicConfig(level=logging.INFO)
 client = discord.Client()
 #Variables
-Version, token, alttoken, prefix = fileservice.loadconfig()
+Version, token, alttoken, prefix, currency = fileservice.loadconfig()
+Blueprint = True
 description = '''an example'''
 bot = commands.Bot(command_prefix='s#', description=description)
+currenttime = int(time.time())
 bot.remove_command('help')
 #Startup
 @bot.event
@@ -36,14 +38,28 @@ async def ping(ctx):
     await ctx.send('Pong! I\'m here! Heartbeat - **' + str(round(bot.latency, 3)) + '** seconds')
 @bot.command()
 async def about(ctx):
+    if Blueprint == True:
+        banner = 'https://cdn.discordapp.com/attachments/556283742008901645/600468110641987614/Banner-Blueprint.png'
+    else:
+        banner = 'https://cdn.discordapp.com/attachments/556283742008901645/600468110109048837/Banner.png'
     embed=discord.Embed(title="**ShrimpBot Information**", description="━━━━━━━━━━━━━━━━━", color=0x04a0db)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/426843523623682048/596834585862602762/Banner.png")
+    embed.set_image(url=banner)
     embed.add_field(name="Created in Python with discord.py", value="by Squid Grill", inline=False)
     embed.add_field(name="Version", value=Version, inline=False)
     embed.add_field(name="Additional Help", value="AdrUlb", inline=False)
     embed.add_field(name="Official ShrimpBot Discord Server", value="https://discord.gg/XztEQAh", inline=False)
     embed.set_footer(text="This bot uses the MIT license. You can learn more here!   https://opensource.org/licenses/MIT")
     await ctx.send(embed=embed)
+
+@bot.command()
+async def report(ctx, message ='null'):
+    if message != 'null':
+        channel = client.get_channel(552304130992111641)
+        await channel.send('**Bug Report from {}** - {}'.format(Version, message))
+        await ctx.send('Successfully sent your bug report, "{}"'.format(message))
+    else:
+        await ctx.send('You need to provide a message first!')
+    
 #Moderation
 @bot.command()
 async def add(ctx):
@@ -83,6 +99,8 @@ async def pet(ctx, pet ='none'):
     else:
         if '@everyone' in ctx.message.content:
             await ctx.send('Can\'t ping everyone.')
+        elif '@here' in ctx.message.content:
+            await ctx.send('Can\'t ping everyone online.')
         else:
             await ctx.send(pet + ' got petted.')
             await ctx.send(file=discord.File(petsend))
@@ -96,6 +114,8 @@ async def hug(ctx, pet ='none'):
     else:
         if '@everyone' in ctx.message.content:
             await ctx.send('Can\'t ping everyone.')
+        elif '@here' in ctx.message.content:
+            await ctx.send('Can\'t ping everyone online.')
         else:
             await ctx.send(pet + ' got hugged. Naisu.')
             await ctx.send(file=discord.File(hugsend))
@@ -109,6 +129,8 @@ async def slap(ctx, pet ='none'):
     else:
         if '@everyone' in ctx.message.content:
             await ctx.send('Can\'t ping everyone.')
+        elif '@here' in ctx.message.content:
+            await ctx.send('Can\'t ping everyone online.')
         else:
             await ctx.send(pet + ' got slapped. Must have hurt.')
             await ctx.send(file=discord.File(slapsend))
@@ -119,27 +141,114 @@ async def cute(ctx, argu ='all'):
     await ctx.send('Here\'s something cute!')
     await ctx.send(file=discord.File(cuteservice.cute(argu)))
     
-@bot.command()
-async def patriotic(ctx):
-    await ctx.send('Happy 4th of July! https://media.discordapp.net/attachments/356228137866231810/596428778712989702/Nylon-American-Flag-closeup-1.png?width=481&height=321')
-#Economy
-@bot.command()
-async def testmoney(ctx, target, value = '100'):
-    userID = str(target).strip('<>@')
-    currentmoney = 50
-    try:
-        currentmoney = int(fileservice.luserconfig(str(userID)))
-    except:
-        fileservice.cuserconfig('50', str(userID))
-    currentmoney += int(value)
-    fileservice.cuserconfig(str(currentmoney), userID)
-    await ctx.send('Successfully gave {} money!'.format(value))
-    await ctx.send('You now have {} money!'.format(currentmoney))
 
+@bot.command()
+async def eightball(ctx):
+    result, positive = cuteservice.get8ball()
+    await ctx.send('''
+**:8ball: The 8-Ball has spoken!**
+It says - **{}**
+'''.format(result))
+@bot.command()
+async def coinflip(ctx):
+    flip = random.randint(1, 2)
+    if flip == 1:
+        await ctx.send('<@{}> flipped and got **HEADS!** :boy:'.format(ctx.message.author.id))
+    else:
+        await ctx.send('<@{}> flipped and got **TAILS!** :cat2:'.format(ctx.message.author.id))
+#Economy
+
+@bot.command()
+async def balance(ctx):
+    id = str(ctx.message.author.id).strip('<>@!')
+    money = 50
+    DMID = ctx.message.author
+    try:
+        money = int(fileservice.luserconfig(id))
+    except:
+        fileservice.cuserconfig(str(money), id)
+    if money > 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000:
+        await ctx.send('Holy fucking shit you\'re rich! To prevent spam, I\'ll DM you your balance.')
+        await DMID.send('You have {} {}.'.format(money, currency))
+    else:
+        await ctx.send('You have {} {}.'.format(money, currency))
+    
+@bot.command()
+async def pay(ctx, target, value = '100'):
+    if int(value) < 1:
+        await ctx.send("Please specify an amount larger than 0.")
+        return
+
+    recID = str(target).strip('<>@!')
+    senderID = str(ctx.message.author.id).strip('<>@!')
+    
+    recMoney = 50
+    senderMoney = 50
+    
+    # load money from recepient
+    try:
+        recMoney = int(fileservice.luserconfig(recID))
+    except:
+        fileservice.cuserconfig(str(recMoney), recID)
+    # load money from sender
+    try:
+        senderMoney = int(fileservice.luserconfig(senderID))
+    except:
+        fileservice.cuserconfig(str(senderMoney), senderID)
+    
+    if senderMoney < int(value):
+        await ctx.send("Oopsies! Looks like you don't have enough money!")
+        return
+    
+    recMoney += int(value)
+    senderMoney -= int(value)
+    
+    fileservice.cuserconfig(str(recMoney), recID)
+    fileservice.cuserconfig(str(senderMoney), senderID)
+    
+    await ctx.send('Successfully gave {} {}.'.format(value, currency))
+    await ctx.send('You now have {} {}.'.format(senderMoney, currency))
+
+@bot.command()
+async def gamble(ctx, value = 'null'):
+    userID = str(ctx.message.author.id).strip('<>@!')
+    
+    if value != 'null':
+        usergamble = random.randint(1,20)
+        shrimpgamble = random.randint(1,20)
+        if usergamble > shrimpgamble:
+            try:
+                money = int(fileservice.luserconfig(userID))
+            except:
+                fileservice.cuserconfig('50', userID)
+            if money > 0:
+                bet = int(value)
+                bet *= 2
+                money += bet
+                await ctx.send('You - {} | ShrimpBot - {}. You won! Your bet got doubled. You\'re richer now, that\'s naisu.'.format(usergamble, shrimpgamble))
+                fileservice.cuserconfig(str(money), userID)
+            else:
+                await ctx.send('Hold on, you don\'t even have enough money to bet this amount!')
+        else:
+            try:
+                money = int(fileservice.luserconfig(userID))
+            except:
+                fileservice.cuserconfig('50', userID)
+            if money > 0:
+                money -= int(value)
+                await ctx.send('You - {} | ShrimpBot - {}. ShrimpBot won, you lost all your money now. Oh dear.'.format(usergamble, shrimpgamble))
+                fileservice.cuserconfig(str(money), userID)
+            else:
+                await ctx.send('Hold on, you don\'t even have enough money to bet this amount!')
+    else:
+        await ctx.send('You need to define an amount of money to gamble first!')
 
 #Error Handling
 #@bot.event
 #async def on_command_error(self, ctx):
     #await ctx.send('Looks like you are missing a required argument. For more information, do s:help (command you\'re trying to run).')
-bot.run(alttoken)
+if Blueprint == True:
+    bot.run(alttoken)
+else:
+    bot.run(token)
     
